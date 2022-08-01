@@ -6,7 +6,7 @@ const listGalleryEl = document.querySelector('.gallery');
 const markupGalleryEl = markupItemsGalleryEl(galleryItems);
 listGalleryEl.insertAdjacentHTML('beforeend', markupGalleryEl);
 
-listGalleryEl.addEventListener('click', onImageClick);
+listGalleryEl.addEventListener('click', onImageClickOpen);
 
 function markupItemsGalleryEl(images) {
   return images
@@ -25,11 +25,30 @@ function markupItemsGalleryEl(images) {
     .join('');
 }
 
-function onImageClick(event) {
+listGalleryEl.addEventListener('click', onImageClickOpen);
+
+function onImageClickOpen(event) {
   event.preventDefault();
 
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}">`);
+  const instance = basicLightbox.create(
+    `
+    <img src="${event.target.dataset.source}">`,
+    {
+      onShow: instance => {
+        window.addEventListener('keydown', onEscImagePress);
+      },
+      onClose: instance => {
+        window.removeEventListener('keydown', onEscImagePress);
+      },
+    },
+  );
+
+  function onEscImagePress(event) {
+    console.log(event.code);
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  }
   instance.show();
 }
 
