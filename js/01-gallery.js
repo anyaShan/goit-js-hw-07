@@ -53,3 +53,35 @@ function onImageClickOpen(event) {
 }
 
 // console.log(galleryItems);
+// =======================================альтернативний варіант вирішення=============================
+
+// listGalleryEl.addEventListener('click', onImageClickOpen);
+
+// const instance = basicLightbox.create(
+//   `
+//     <img class="modal-img" src="">`,
+//   {
+//     onShow: instance => {
+//       window.addEventListener('keydown', onEscImagePress);
+//     },
+//     onClose: instance => {
+//       window.removeEventListener('keydown', onEscImagePress);
+//     },
+//   },
+// );
+
+// function onImageClickOpen(event) {
+//   event.preventDefault();
+//   if (event.target.nodeName !== 'IMG') {
+//     return;
+//   }
+//   instance.element().querySelector('img').src = event.target.dataset.source;
+//   instance.show();
+// }
+
+// function onEscImagePress(event) {
+//   console.log(event.code);
+//   if (event.code === 'Escape') {
+//     instance.close();
+//   }
+// }
